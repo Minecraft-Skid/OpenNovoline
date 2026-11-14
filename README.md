@@ -67,6 +67,20 @@ On Windows:
 .\gradlew.bat run
 ```
 
+Use Java 17 for both Gradle and IDE launch configurations. The `run` task pins
+the client JVM to Java 17; launching `novoline0.Bootstrap` directly does not.
+
+On Linux, an Azul JDK 17 installation can fail while loading the official
+LWJGL 2 native library with:
+
+```text
+libjawt.so: version `SUNWprivate_1.1' not found
+```
+
+That is a JNI compatibility problem in the selected JDK distribution, not in
+OpenNovoline. Use a Temurin/OpenJDK 17 build, or run the client with the
+repository's Java 17 toolchain.
+
 `./gradlew build` produces:
 
 - `build/libs/OpenNovoline-1.0.0.jar`: reconstructed classes and resources.

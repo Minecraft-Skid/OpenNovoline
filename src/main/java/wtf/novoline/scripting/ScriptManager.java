@@ -67,7 +67,15 @@ public class ScriptManager extends CopyOnWriteArrayList<Script> {
    }
 
    private void installSecurityManager() {
-      System.setSecurityManager(new ScriptSecurityManager());
+      try {
+         System.setSecurityManager(new ScriptSecurityManager());
+      } catch (UnsupportedOperationException exception) {
+         Logger.warn(
+            exception,
+            "Security Manager is unavailable on Java {}; script file path isolation is disabled",
+            Runtime.version().feature()
+         );
+      }
    }
 
    public void unloadScript(Script script2) {

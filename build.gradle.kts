@@ -60,6 +60,11 @@ val nativeDirectory = nativePlatform?.let(nativeRoot::dir)
 tasks.named<JavaExec>("run") {
     group = "application"
     description = "Builds OpenNovoline and launches the Minecraft client with local assets and natives"
+    javaLauncher.set(
+        javaToolchains.launcherFor {
+            languageVersion.set(JavaLanguageVersion.of(17))
+        }
+    )
     workingDir(runDirectory)
     standardInput = System.`in`
     args(
