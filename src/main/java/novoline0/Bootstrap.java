@@ -2,8 +2,19 @@ package novoline0;
 
 import net.minecraft.client.main.Main;
 
+import java.io.File;
+import java.util.Arrays;
+
 public class Bootstrap {
    public static void main(String[] texts) {
-      Main.main(texts);
+      System.setProperty("org.lwjgl.librarypath", new File("../test_natives/" + (System.getProperty("os.name").startsWith("Windows") ? "windows" : "linux")).getAbsolutePath());
+
+      Main.main(concat(new String[]{"--version", "MCP", "--accessToken", "0", "--assetsDir", "assets", "--assetIndex", "1.8", "--userProperties", "{}"}, texts));
+   }
+
+   public static <T> T[] concat(T[] first, T[] second) {
+      T[] result = Arrays.copyOf(first, first.length + second.length);
+      System.arraycopy(second, 0, result, first.length, second.length);
+      return result;
    }
 }
